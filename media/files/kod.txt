@@ -1,0 +1,60 @@
+import random
+print("""
+******************************************
+Taş-Kağıt-Makas Oyununa Hoşgeldiniz!
+
+
+Kazanılan Her Bir Tur Bir Puana Eşittir
+3 Puana İlk Ulaşan Kazanır
+******************************************
+""")
+def oyun():
+    kps = 0
+    bps = 0
+    liste = ["Taş", "Kağıt", "Makas"]
+    ad = input("Adınız Nedir:")
+    while True:
+        ri = random.randint(0, len(liste)-1)
+        bs = liste[ri]
+        ks = input("Seçim (Taş:t Kağıt:k Makas:m):")
+        if (ks == "t" and bs == "Makas"):
+            kps += 1
+            print("Bilgisayar Seçimi:Makas")
+            print(ad,"Bu Turu Kazandı")
+        elif (ks == "k" and bs == "Taş"):
+            kps += 1
+            print("Bilgisayar Seçimi:Taş")
+            print(ad,"Bu Turu Kazandı")
+        elif (ks == "m" and bs == "Kağıt"):
+            kps += 1
+            print("Bilgisayar Seçimi:Kağıt")
+            print(ad,"Bu Turu Kazandı")
+        elif (ks == "t" and bs == "Kağıt"):
+            bps += 1
+            print("Bilgisayar Seçimi:Kağıt")
+            print("Bilgisayar Bu Turu Kazandı")
+        elif (ks == "m" and bs == "Taş"):
+            bps += 1
+            print("Bilgisayar Seçimi:Taş")
+            print("Bilgisayar Bu Turu Kazandı")
+        elif (ks == "k" and bs == "Makas"):
+            bps += 1
+            print("Bilgisayar Seçimi:Makas")
+            print("Bilgisayar Bu Turu Kazandı")
+
+        elif (ks == "k" and bs == "Kağıt"):
+            print("Bilgisayar Seçimi:Kağıt")
+            print("Bu Tur Berabere Bitti")
+        elif (ks == "m" and bs == "Makas"):
+            print("Bilgisayar Seçimi:Makas")
+            print("Bu Tur Berabere Bitti")
+        elif (ks == "t" and bs == "Taş"):
+            print("Bilgisayar Seçimi:Taş")
+            print("Bu Tur Berabere Bitti")
+        if (kps == 3):
+            print(ad,"Oyunu Kazandı Tebrikler!")
+            break
+        elif (bps == 3):
+            print("Bilgisayar Oyunu Kazandı")
+            break
+oyun()
