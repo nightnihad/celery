@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'file',
     'django_celery_results',
     'django_celery_beat',
+    'cs.timeutils'
 ]
 
 MIDDLEWARE = [

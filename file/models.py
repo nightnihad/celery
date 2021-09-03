@@ -1,7 +1,6 @@
 from logging import FATAL
-from django.utils import timezone
-from datetime import datetime
 from django.db import models
+from datetime import datetime, timedelta, timezone
 from django.db.models.deletion import CASCADE
 from user.models import CustomUser
 # Create your models here.
@@ -41,7 +40,7 @@ class CommentModel(models.Model):
 class ShareModel(models.Model):
     file=models.ForeignKey(Filemodel,related_name='shared_files',on_delete=models.DO_NOTHING)
     sender=models.ForeignKey(CustomUser,related_name='gonderen',on_delete=models.DO_NOTHING)
-    receiver=models.ForeignKey(CustomUser,related_name='qebul_eden',on_delete=models.DO_NOTHING)
+    receiver=models.CharField(max_length=50,verbose_name='Alıcı',null=True)
     see_comments=models.BooleanField(default=False)
 
     def __str__(self):

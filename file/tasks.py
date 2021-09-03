@@ -1,13 +1,15 @@
 from __future__ import absolute_import,unicode_literals
-from file.models import Filemodel
 
+from celery.app.base import Celery
+from file.models import Filemodel
 from celery.schedules import crontab
 from django.utils import timezone
 
 import celery
+app=Celery()
 
-@celery.decorators.periodic_task(run_every=crontab(minute='*/5'))
-def delete_old_files(fayl):
+@app.on_after_configure.connect
+def delete_old_files(fayl,**kwargs):
     if fayl.expiration_date < timezone.now():
         fayl.delete()
             # log deletion
