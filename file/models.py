@@ -21,8 +21,8 @@ class Filemodel(models.Model):
     """Yaranma və dəyişdirilmə tarixi üçün save metodunu override"""
     def save(self,*args,**kwargs):
         if not self.id:
-            self.created_date=timezone.now()
-        self.update_date=timezone.now()
+            self.created_date=datetime.now()
+        self.update_date=datetime.now()
         return super(Filemodel, self).save(*args,**kwargs)
 
 

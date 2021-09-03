@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from .forms import *
-from datetime import datetime, timedelta,timezone
+import datetime
 
 
 from .tasks import delete_old_files
@@ -22,8 +22,16 @@ def saveform(request):
             delete_old_files.delay(fayl)
             return redirect()
     return render()
-def dashboard(request):
-    return render()
+"""def dashboard(request):
+    fayllar=Filemodel.objects.all()
+    user=request.user.username
+    dashboarduser=CustomUser.objects.get(username=user)
+    context={
+        'fayllar':fayllar,
+        'dashboarduser':dashboarduser
+    }
+
+    return render(request,'profil.html')"""
 def allowedperson(request,id):
     return render()
 def upgradefile(request,id):

@@ -1,11 +1,18 @@
 from django.shortcuts import render,redirect
 from .forms import RegisterForm
+from django.contrib.auth import views as auth_views
+from django.contrib.auth import views as auth_views
+from django.views import generic
+from django.urls import reverse_lazy
+from .forms import LoginForm, RegisterForm
 from .models import CustomUser
 from django.contrib import messages
 from django.contrib.auth import login as auth_login,authenticate,logout as auth_logout
 
 # Create your views here.
 def register(request):
+    if request.user.is_authenticated:
+        return redirect('/')
     form=RegisterForm()
     context={
         'form':form
@@ -27,4 +34,24 @@ def register(request):
         messages.success(request,'Qeyd olunmadınız')
         return render(request,'register.html',context)
     return render(request,'register.html',context)
-    
+
+def login(request):
+    if request.user.is_authenticated:
+        return render('/')
+    form=LoginForm()
+    context={
+        'form':form
+    }
+    if request.method =='POST':
+        form=LoginForm(request.POST)
+        if form.is_valid():
+            username=form.cleaned_data.get('username')
+            password=form.cleaned_data.get('password')
+            email=form.cleaned_data.get('email')
+            user1=authenticate(username=username,password=password,email=email)
+            if user1 is None:
+                return render(request,'login.html',context)
+            auth_login(request,user1)
+            messages.success(request,'Qeyd olundunuz')
+            return redirect('/')
+    return render(request,'login.html',context)
