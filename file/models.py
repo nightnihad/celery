@@ -3,7 +3,7 @@ from django.utils import timezone
 from datetime import datetime
 from django.db import models
 from django.db.models.deletion import CASCADE
-from users.models import CustomUser
+from user.models import CustomUser
 # Create your models here.
 """Fayl modeli yaradılır və özəllikləri qeyd edilir."""
 class Filemodel(models.Model):

@@ -37,8 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'users',
+    'user',
     'file',
+    'django_celery_results',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -133,7 +135,10 @@ BROKER_URL = 'amqp://nightred:nihad464@localhost:5672//'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 
-AUTH_USER_MODEL = 'users.CustomUser'
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_CACHE_BACKEND = 'django-cache'
+
+AUTH_USER_MODEL = 'user.CustomUser'
 
 STATIC_URL= "/static/"
 # or, eg,

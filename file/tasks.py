@@ -1,8 +1,14 @@
 from __future__ import absolute_import,unicode_literals
-import time
-import os
-from celery import shared_task
+from file.models import Filemodel
 
-@shared_task
-def add(x,y):
-    return x+y
+from celery.schedules import crontab
+from django.utils import timezone
+
+import celery
+
+@celery.decorators.periodic_task(run_every=crontab(minute='*/5'))
+def delete_old_files(fayl):
+    if fayl.expiration_date < timezone.now():
+        fayl.delete()
+            # log deletion
+        return "completed deleting foos at {}".format(timezone.now())

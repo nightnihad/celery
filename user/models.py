@@ -22,4 +22,3 @@ class CustomUser(AbstractUser):
     def get_full_name(self):
         full_name = '{}{} ' .format(self.first_name, self.last_name)
         return full_name.strip()
-
