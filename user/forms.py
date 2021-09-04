@@ -1,3 +1,5 @@
+from file.models import ShareModel
+from django.forms import ModelForm
 from .models import CustomUser
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
@@ -22,3 +24,8 @@ class RegisterForm(UserCreationForm):
 
         'email': forms.fields.TextInput(attrs={'placeholder': 'email stuff'})
         }
+class AllowerForm(forms.ModelForm):
+    class Meta:
+        model=ShareModel
+        fields='__all__'
+        exclude=['sender']

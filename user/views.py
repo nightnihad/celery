@@ -1,9 +1,13 @@
+from django.core.exceptions import ValidationError
+from django.db.models.query_utils import Q
+from django.http.response import HttpResponse
 from django.shortcuts import render,redirect
-from .forms import RegisterForm
+from .forms import AllowerForm, RegisterForm
 from django.contrib.auth import views as auth_views
 from django.contrib.auth import views as auth_views
 from django.views import generic
 from django.urls import reverse_lazy
+from file.models import ShareModel,Filemodel,CommentModel
 from .forms import LoginForm, RegisterForm
 from .models import CustomUser
 from django.contrib import messages
@@ -55,3 +59,40 @@ def login(request):
             messages.success(request,'Qeyd olundunuz')
             return redirect('/')
     return render(request,'login.html',context)
+def logout(request):
+    auth_logout(request)
+    messages.success(request,'Çıxış etdiniz',)
+    return redirect('/')
+def profil(request):
+    userinformation=CustomUser.objects.get(username=request.user)
+    allowedinformation=ShareModel.objects.filter(sender=request.user)
+    allowerinformation=ShareModel.objects.filter(receiver=request.user)
+    context={
+        'userinformation':userinformation,
+        'allowedinformation':allowedinformation,
+        'allowerinformation':allowerinformation
+    }
+    return render(request,'profil.html',context)
+def allowed(request):
+    form=AllowerForm()
+    context={
+        'form':form
+    }
+    if request.method=='POST':
+        form=AllowerForm(request.POST,request.FILES)
+        if form.is_valid():
+            sender=request.user
+            receiver=form.cleaned_data.get('receiver')
+            file=form.cleaned_data.get('file')
+            see_comments=form.cleaned_data.get('see_comments')
+            user2=CustomUser.objects.get(Q(username=receiver) | Q(email=receiver))
+            if user2 is None:
+                return render(request,'allowed.html',context)
+            if request.user.username ==receiver or request.user.email==receiver:
+                raise ValidationError('salam qaqa')
+            newallowed=ShareModel.objects.create(sender=sender,file=file,receiver=receiver,see_comments=see_comments)
+            newallowed.save()
+            return redirect('/')
+        return render(request,'allowed.html',context)
+    return render(request,'allowed.html',context)
+            

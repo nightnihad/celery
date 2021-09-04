@@ -39,10 +39,10 @@ class CommentModel(models.Model):
 
 class ShareModel(models.Model):
     file=models.ForeignKey(Filemodel,related_name='shared_files',on_delete=models.DO_NOTHING)
-    sender=models.ForeignKey(CustomUser,related_name='gonderen',on_delete=models.DO_NOTHING)
+    sender=models.CharField(max_length=50,verbose_name='Göndərən',null=True)
     receiver=models.CharField(max_length=50,verbose_name='Alıcı',null=True)
     see_comments=models.BooleanField(default=False)
 
     def __str__(self):
-        return self.file
+        return self.file.name
 
