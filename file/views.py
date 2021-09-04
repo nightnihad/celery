@@ -58,26 +58,27 @@ def deletefile(request,id):
 def addcomment(request,id):
     file= get_object_or_404(Filemodel,id=id)
     form=CommentForm()
-    comment1=get_object_or_404(CommentModel,file=file)
+    comments=file.comments.all()
+    context={
+        'file':file,
+        'form':form,
+        'comments':comments
+    }
     if request.method=='POST':
         form=CommentForm(request.POST)
+
         if form.is_valid():
             comment=form.save(commit=False)
             comment.author=request.user
             comment.file=file
             comment.save()
             messages.success(request, 'Yorum başarılı bir şekilde eklendi.')
-            return redirect('/')
-    context={
-        'file':file,
-        'form':form,
-        'comment1':comment1
-    }
+            return render(request,'detail.html',context)
     return render(request,'detail.html',context)
-def deletecomment(request,id):
+"""def deletecomment(request,id):
     file=get_object_or_404(Filemodel,id=id)
     comment=get_object_or_404(CommentModel,file=file)
     if request.method=='POST':
         comment.delete()
         return redirect('/')
-    return render(request,'deletecomment.html',{'comment':comment})
+    return render(request,'deletecomment.html',{'comment':comment})"""

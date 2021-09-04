@@ -7,9 +7,20 @@
     <title>Document</title>
 </head>
 <body>
+
     {{file}}
     <br>
-    {{form}}
-    
+{% for comment in comments %}
+{{comment.content}}
+{{comment.author}}
+{{comment.comment_date}}
+<hr>
+
+{% endfor %}
+<form action="" method="post" enctype='multipart/form-data'>
+{% csrf_token %}
+{{form}}
+<button type="submit" id="submit">Login</button>
+      </form>
 </body>
 </html>
