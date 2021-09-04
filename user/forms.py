@@ -4,8 +4,6 @@ from .models import CustomUser
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 class LoginForm(forms.Form):
-    email=forms.CharField(label='email',
-                    widget=forms.EmailInput(attrs={'placeholder':'email'}))
     username= forms.CharField(label='username', 
                     widget=forms.TextInput(attrs={'placeholder': 'username'}))
     password= forms.CharField(label='parol', 

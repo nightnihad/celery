@@ -12,15 +12,13 @@ class FileForm(forms.ModelForm):
 
 
 
-
-
 class CommentForm(forms.ModelForm):
     class Meta:
         model=CommentModel
         fields=['content']
 
 
-class ShareForm(forms.ModelForm):
-    class Meta:
-        model=ShareModel
-        fields=['receiver','see_comments']
+#class ShareForm(forms.ModelForm):
+#    class Meta:
+#        model=ShareModel
+#        fields=['receiver','see_comments']

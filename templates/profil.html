@@ -7,14 +7,27 @@
     <title>Document</title>
 </head>
 <body>
+{{formupdate}}
+<br>
     {{userinformation.email}}
     {{userinformation.username}}
     {{userinformation.first_name}}
+    {{userinformation.last_name}}
+    {{userinformation.date_joined}}
+    {{userinformation.is_active}}
     <br>
     {% for allow in allowedinformation %}
-    {{allow.file.name}}
+    {{allow.file}}
+    {{allow.sender}}
+    {{allow.receiver}}
 
     {% endfor %}
-    
+    <br>
+    {% for allor in allowerinformation %}
+    {{allor.file}}
+    {{allor.sender}}
+    {{allor.receiver}}
+
+    {% endfor %}
 </body>
 </html>

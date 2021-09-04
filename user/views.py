@@ -1,14 +1,15 @@
+from django.core.checks.messages import Error
 from django.core.exceptions import ValidationError
 from django.db.models.query_utils import Q
 from django.http.response import HttpResponse
-from django.shortcuts import render,redirect
-from .forms import AllowerForm, RegisterForm
-from django.contrib.auth import views as auth_views
+from django.shortcuts import render,redirect,get_object_or_404
+from django.views.decorators.csrf import csrf_exempt
+from .forms import AllowerForm, RegisterForm,LoginForm
 from django.contrib.auth import views as auth_views
 from django.views import generic
+from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 from file.models import ShareModel,Filemodel,CommentModel
-from .forms import LoginForm, RegisterForm
 from .models import CustomUser
 from django.contrib import messages
 from django.contrib.auth import login as auth_login,authenticate,logout as auth_logout
@@ -38,31 +39,30 @@ def register(request):
         messages.success(request,'Qeyd olunmadınız')
         return render(request,'register.html',context)
     return render(request,'register.html',context)
-
+@csrf_exempt
 def login(request):
     if request.user.is_authenticated:
-        return render('/')
-    form=LoginForm()
+        return redirect('/')
+    form=LoginForm(request.POST or None)
     context={
-        'form':form
-    }
-    if request.method =='POST':
-        form=LoginForm(request.POST)
-        if form.is_valid():
-            username=form.cleaned_data.get('username')
-            password=form.cleaned_data.get('password')
-            email=form.cleaned_data.get('email')
-            user1=authenticate(username=username,password=password,email=email)
-            if user1 is None:
-                return render(request,'login.html',context)
-            auth_login(request,user1)
-            messages.success(request,'Qeyd olundunuz')
-            return redirect('/')
+            'form':form
+        }
+    if form.is_valid():
+        username=form.cleaned_data.get('username')
+        password=form.cleaned_data.get('password')
+        user1=authenticate(username=username,password=password)
+        if user1 is None:
+           raise ValidationError('salam')
+        auth_login(request,user1)
+        messages.success(request,'Qeyd olundunuz')
+        return redirect('/')
     return render(request,'login.html',context)
+@login_required()
 def logout(request):
     auth_logout(request)
     messages.success(request,'Çıxış etdiniz',)
     return redirect('/')
+@login_required()
 def profil(request):
     userinformation=CustomUser.objects.get(username=request.user)
     allowedinformation=ShareModel.objects.filter(sender=request.user)
@@ -81,7 +81,7 @@ def allowed(request):
     if request.method=='POST':
         form=AllowerForm(request.POST,request.FILES)
         if form.is_valid():
-            sender=request.user
+            sender=str(request.user)
             receiver=form.cleaned_data.get('receiver')
             file=form.cleaned_data.get('file')
             see_comments=form.cleaned_data.get('see_comments')
@@ -91,7 +91,6 @@ def allowed(request):
             if request.user.username ==receiver or request.user.email==receiver:
                 raise ValidationError('salam qaqa')
             newallowed=ShareModel.objects.create(sender=sender,file=file,receiver=receiver,see_comments=see_comments)
-            newallowed.save()
             return redirect('/')
         return render(request,'allowed.html',context)
     return render(request,'allowed.html',context)
