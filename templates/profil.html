@@ -1,33 +1,177 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-{{formupdate}}
-<br>
-    {{userinformation.email}}
-    {{userinformation.username}}
-    {{userinformation.first_name}}
-    {{userinformation.last_name}}
-    {{userinformation.date_joined}}
-    {{userinformation.is_active}}
-    <br>
-    {% for allow in allowedinformation %}
-    {{allow.file}}
-    {{allow.sender}}
-    {{allow.receiver}}
+<style>
+    body{
+    margin-top:20px;
+    color: #1a202c;
+    text-align: left;
+    background-color: #20B2AA;    
+}
+.main-body {
+    padding: 15px;
+}
+.card {
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+}
 
-    {% endfor %}
-    <br>
-    {% for allor in allowerinformation %}
-    {{allor.file}}
-    {{allor.sender}}
-    {{allor.receiver}}
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 0 solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+}
 
-    {% endfor %}
-</body>
-</html>
+.card-body {
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1rem;
+}
+
+.gutters-sm {
+    margin-right: -8px;
+    margin-left: -8px;
+}
+
+.gutters-sm>.col, .gutters-sm>[class*=col-] {
+    padding-right: 8px;
+    padding-left: 8px;
+}
+.mb-3, .my-3 {
+    margin-bottom: 1rem!important;
+}
+
+.bg-gray-300 {
+    background-color: #e2e8f0;
+}
+.h-100 {
+    height: 100%!important;
+}
+.shadow-none {
+    box-shadow: none!important;
+}
+</style>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<div class="container">
+    <div class="main-body">
+    
+          <!-- Breadcrumb -->
+          <nav aria-label="breadcrumb" class="main-breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item active" aria-current="page">User Profil</li>
+              <a href="{% url 'file:savefile' %}" class="breadcrumb-item active" aria-current="page">Yeni file yarat</a>
+              <a href="{% url 'user:myfiles' %}" class="breadcrumb-item active" aria-current="page">Fayl seç və Göndər</a>
+              <a href="{% url 'user:myfiles' %}" class="breadcrumb-item active" aria-current="page">Fayllar səhifəsi</a>
+              {% if request.user.is_authenticated %}
+              <a href="{% url 'user:logout' %}" class="breadcrumb-item active" aria-current="page">Çıxış</a>
+            
+              {% endif %}
+            </ol>
+          </nav>
+          <!-- /Breadcrumb -->
+    
+          <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex flex-column align-items-center text-center">
+                    {% if request.user.avatar %}
+                    <img class="profile" src="{{request.user.avatar.url}}" alt="Admin" class="rounded-circle" width="150">
+                    {% else %}
+                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
+                    {% endif %}
+                    <div class="mt-3">
+                      <h4>{{userinformation.username}}</h4>
+                      <p class="text-secondary mb-1">{{userinformation.first_name}}</p>
+                      <p class="text-muted font-size-sm">{{userinformation.last_name}}</p>
+                      <p class="text-muted font-size-sm">{{userinformation.email}}</p>
+                      <p class="text-muted font-size-sm">{{userinformation.date_joined}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+            <div class="col-md-8">
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Mənim göndərdiyim fayl sayı</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{allowedcount}}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Mənə göndərilən fayl sayı</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{allowercount}}
+                    </div>
+                  </div>
+                  <hr>
+                  <hr>
+                </div>
+              </div>
+
+              <div class="row gutters-sm">
+                <div class="col-sm-6 mb-3">
+                  <div class="card h-100">
+                    <div class="card-body">
+                      <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">Paylaşdığım fayllar</i></h6>
+                      {% if allowedinformation %}
+                        {% for allowed in allowedinformation %}
+                        <div>
+                        {{'Fayl adı:'}} {{allowed}}  
+                        <br>   
+                        <a  href='{% url "file:detail" id=allowed.file.id %}'> Ətraflı</a>
+                                           <br>
+                        <a  href='{% url "file:deleteshared" id=allowed.id %}'> Sizdən göndərilmiş faylı silin</a>
+                        </div>
+                        <br>
+                        <hr>
+                        {% endfor %}
+                      {% else %}
+                      <span class="text-secondary">Yoxdur</span>
+                      {% endif %}
+                      <div class="progress mb-3" style="height: 5px">
+                      </div>
+                      <small></small>
+                      <div class="progress mb-3" style="height: 5px">
+                        <div ></div>
+                      </div>
+                      <div class="progress mb-3" style="height: 5px">
+                        <div> </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6 mb-3">
+                  <div class="card h-100">
+                    <div class="card-body">
+                      <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">Mənə göndərilən fayllar</i></h6>
+                      </div>
+                      {% if allowerinformation %}
+                      {% for allower in allowerinformation %}
+                        <a  href='{% url "file:detail" id=allower.file.id %}'> Ətraflı</a>
+                        <a  href='{% url "file:deleteshared" id=allower.id %}'> Sizə göndərilmiş faylı silin silin</a>
+                        
+                        {{'Fayl adı:'}} {{allower}}
+                        {% endfor %}
+                      {% else %}
+                      <span class="text-secondary">Yoxdur</span>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+              </div>

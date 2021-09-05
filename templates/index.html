@@ -1,18 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "layout.html" %} 
+{% load crispy_forms_tags %} 
+{% load static %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-
-<body>
-    <form action="" method="post">
-        {{form}}
+{% block body %}
+<link rel="stylesheet" href="{% static 'index.css' %}">
+<div class="container">
+    <form action="" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+        {% csrf_token %} 
+        {{form|crispy}}
+        <button class="btn btn-primary" type="submit">Təsdiqlə</button>
     </form>
+</div>
 
-</body>
-
-</html>
+{% endblock body %}

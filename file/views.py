@@ -1,25 +1,26 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from .forms import *
-import datetime
+from django import utils
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-
-from .tasks import delete_old_files
+from datetime import datetime, date, time, timedelta
+from .tasks import deleted_old_files
 from .models import *
 from user.models import CustomUser
 # Create your views here.
 
-def saveform(request):
+def savefile(request):
     form=FileForm()
+    context={'form':form}
     if request.method=='POST':
-        form=FileForm(request.POST)
+        form=FileForm(request.POST,request.FILES)
         if form.is_valid():
             fayl=form.save(commit=False)
-            fayl.author=request.user.username
-            fayl.expiration_date=timezone.now() + datetime.timedelta(days=7)
+            fayl.author=request.user
+            fayl.expiration_date=utils.timezone.now()+ timedelta(days=7)
             fayl.save()
-            delete_old_files.delay(fayl)
-            return redirect()
-    return render()
+            return redirect('file:detail',id=fayl.id)
+    return render(request,'newfile.html',context)
 """def dashboard(request):
     fayllar=Filemodel.objects.all()
     user=request.user.username
@@ -30,8 +31,7 @@ def saveform(request):
     }
 
     return render(request,'profil.html')"""
-def allowedperson(request,id):
-    return render()
+@login_required()
 def updatefile(request,id):
     sifaris=Filemodel.objects.get(id=id)
     formupdate1=FileForm(instance=sifaris)
@@ -45,7 +45,7 @@ def updatefile(request,id):
     'formupdate1':formupdate1
     }
     return render(request,'update.html',context1)
-
+@login_required()
 def deletefile(request,id):
     sifaris=Filemodel.objects.get(id=id)
     context={
@@ -55,14 +55,17 @@ def deletefile(request,id):
         sifaris.delete()
         return redirect('user:profil')
     return render(request,'delete.html',context)
+@login_required()
 def addcomment(request,id):
     file= get_object_or_404(Filemodel,id=id)
+    sharefile=file.shared_files.filter()
     form=CommentForm()
     comments=file.comments.all()
     context={
         'file':file,
         'form':form,
-        'comments':comments
+        'comments':comments,
+        'sharefile':sharefile
     }
     if request.method=='POST':
         form=CommentForm(request.POST)
@@ -73,12 +76,18 @@ def addcomment(request,id):
             comment.file=file
             comment.save()
             messages.success(request, 'Yorum başarılı bir şekilde eklendi.')
-            return render(request,'detail.html',context)
+            return redirect('file:detail',id=file.id)
     return render(request,'detail.html',context)
-"""def deletecomment(request,id):
-    file=get_object_or_404(Filemodel,id=id)
-    comment=get_object_or_404(CommentModel,file=file)
-    if request.method=='POST':
+@login_required()
+def deletecomment(request,id):
+    comment=get_object_or_404(CommentModel,id=id)
+    if request.user ==comment.author or request.user==comment.file.author:
         comment.delete()
-        return redirect('/')
-    return render(request,'deletecomment.html',{'comment':comment})"""
+        return redirect('file:detail', id=comment.file.id)
+@login_required
+def deleteshared(request,id):
+    file=ShareModel.objects.get(id=id)
+    file.delete()
+    return redirect('user:profil')
+
+    

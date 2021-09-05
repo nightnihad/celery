@@ -7,14 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-salam
 
 <body>
-    <form action="." method="post" enctype='multipart/form-data'>
-        {% csrf_token %}
-        {{formupdate1}}
-        <button type="submit" id="submit">Login</button>
-      </form>
+
+<form action="." method="post" accept-charset="utf-8" enctype="multipart/form-data"> 
+    {% csrf_token %}
+    {{form}}
+    <button class="submit" type="btn btn-danger">Təsdiqlə</button>
+</form>
 </body>
 
 </html>

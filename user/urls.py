@@ -9,5 +9,6 @@ urlpatterns=[
     path('login/', views.login, name='login'),
     path('logout/',views.logout,name='logout'),
     path('profil/',views.profil,name='profil'),
-    path('allowed/',views.allowed,name='allowed')
+    path('file/<str:id>',views.allowed,name='file'),
+    path('myfiles/',views.myfiles,name='myfiles')
 ]

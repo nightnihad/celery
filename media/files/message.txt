@@ -1,0 +1,35 @@
+1- javascript öğrenmeyi kafanıza koyun ya da buna mecbur kalın.
+bence can sıkıntısının, depresyonun, parasızlığın bir numaralı düşmanı kodlama(javascript) öğrenmek.
+
+çünkü öğrenmek zaten başlı başına dopamin, seretonin gibi bir çok faydalı hormonu salgılamanızı sağlıyor, ayrıca sonuçları çok çabuk şekilde görmek de bahsi geçen hormonların salınım miktarını arttırıyor. sonunda da elinizde mis gibi bir mesleğiniz oluyor ve isterseniz bunu paraya çevirebiliyorsunuz.
+
+2- javascript öğrenmenin hiç de kolay bir şey olmadığını kabul edin ama azimle çalışırsanız 1000 saat teorik/kodlama yaparak, 350 saat proje geliştirerek çok önemli aşama kaydedebilirsiniz. bir yerlerde junior front end geliştiricisi olarak işe başlayacak seviyeye gelebilirsiniz.
+
+3- ingiliz abilerin dediği gibi practice makes perfect mottosundan yola çıkarak hergün en az yarım saat kod yazma çalışmaları yapıp pratiğinizi geliştirmelisiniz.
+
+4- temel de olsa ingilizce bilmeniz süreci çok hızlandıracaktır. eğer bilmiyorsanız korkmayın google translate işinizi çok güzel görecektir.
+
+5- javascript öğrenmek için html ve css temelini bilmeniz gerekli bunun için html ve css adresindeki dersler iş görür. ya da youtubedaki html ve css dersleri sayesinde bu sorunu birkaç saatlik çalışmayla çözebileceğinizi düşünüyorum. eğer benim gibi çabuk sıkılan biriyseniz bu dersleri javascript ile birlikte götürebilirsiniz ama fazla da uzatmayın.
+
+6- gelelim javascript öğrenmeye nasıl başlayacağınıza. ilk önce linkteki youtube listesindeki kısa ama eğlenceli derslerin hepsini bir çırpıda bitirebilirsiniz.
+
+7- sonra marijn haverbeke'nin online javascript kitabı olan eloquent javascript'e başlarsınız. bu kitapla birlikte:
+
+8- freecodecamp.org adresindeki interaktif derslere başlayıp kitapla birlikte pekiştirme yaparsınız.
+
+9- yukarıdaki derslerle birlikte matematiğinizi de geliştirmelisiniz. matematiksel fonksiyonlar, kalkülüs, doğrusal cebir, algoritma çalışabilirsiniz.
+
+10- sıkıldınız mı mdn "mozilla developer network" deki dersleri ve referans notlarına bakabilirsiniz. unutmayın mdn ilerideki programcılık yaşamınızda da çok faydalı olacaktır.
+
+11- yine arada temel photoshop öğrenmeye başlayıp proje geliştirirken ihtiyacınız olacak görsel malzemeleri daha kolay hazırlayabilirsiniz.
+
+12- nesne tabanlı "oop" ve fonksiyonel programlama "functional programming" nedir ne değildir öğrenmeniz faydanıza olacaktır. bunun için dmitry soshnikov'un online javascript. the core: 2nd edition kitabı işinizi görecektir.
+
+13- ecmascript 6 ile ilgili youtube dersleri de sizi ileri seviyeye götürecektir.
+
+14- ayrıca stack overflow ve github'a üye olup kendinize sanal da olsa bir çevre edinmeniz faydanıza olacaktır. bunun için ekşi sözlük telegram javascript grubu kanalından javascript ile alakalı paylaşımları takip edebilirsiniz.
+
+yukarıda da değindiğim gibi bence olay programla dilinin nasıl yazılacağını öğrenmek falan değil o işin en kolay tarafı. önemli olan çok iyi matematik yani kalkülüs, doğrusal cebir ve algoritma bilmekten geçiyor bunu da kendi kendinize başarabileceğinizi düşünüyorum.
+
+eklemeler:
+@thestalker - özellikle türkçe kaynak arayanlara, microsoft un ücretsiz sosyal sorumluluk sitesi acikakademi.comacikakademi.com daki html ve javascript eğitimlerini ve stackoverflow tarzı forumlarını da ben eklemek isterim. çok faydalı olacaktır.

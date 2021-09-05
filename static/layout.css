@@ -1,0 +1,13 @@
+.container {
+    margin-top: 100px;
+    background-color: rgb(175, 174, 174);
+    text-align: center;
+    border-radius: 3px;
+    -webkit-box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.6);
+    box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.6);
+    padding: 30px;
+}
+
+body {
+    color: black;
+}
