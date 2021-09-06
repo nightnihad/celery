@@ -37,10 +37,12 @@ def register(request):
             newUser.set_password(password1)
             newUser.avatar=avatar
             newUser.save()
-            return redirect('user:profil')
+            messages.success('Qeyd olundunuz,giriş edin')
+            return redirect('user:login')
         messages.success(request,'Qeyd olunmadınız')
         return render(request,'register.html',context)
     return render(request,'register.html',context)
+@csrf_exempt
 def login(request):
     if request.user.is_authenticated:
         return redirect('/')
@@ -53,10 +55,10 @@ def login(request):
         password=request.POST['password']
         user1=authenticate(username=username,password=password)
         if user1 is None:
-           raise ValidationError('salam')
+           raise ValidationError('parol və ya username xətalıdır.')
         auth_login(request,user1)
-        messages.success(request,'Qeyd olundunuz')
-        return redirect('user:profil')
+        messages.success(request,'Giriş etdiniz')
+        return redirect('user:main')
     return render(request,'login.html',context)
 @login_required()
 def logout(request):
@@ -97,6 +99,7 @@ def allowed(request,id):
             if request.user.username ==receiver or request.user.email==receiver:
                 raise ValidationError('salam qaqa')
             newallowed=ShareModel.objects.create(sender=sender,file=file,receiver=receiver,see_comments=see_comments)
+            messages.success(request,'fayl paylaşıldı',receiver,'ilə')
             return redirect('user:profil')
         return render(request,'index.html',context)
     return render(request,'index.html',context)

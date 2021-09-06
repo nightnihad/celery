@@ -1,8 +1,14 @@
 {% extends "layout.html" %} 
 {% load crispy_forms_tags %} 
 {% load static %}
+{% block head %}
+<title>Index page</title>
+{% endblock head %}
 
 {% block body %}
+    {% for message in messages %}
+    {{ message}}
+    {% endfor %}
 <link rel="stylesheet" href="{% static 'index.css' %}">
 <div class="container">
     <form action="" method="post" accept-charset="utf-8" enctype="multipart/form-data">

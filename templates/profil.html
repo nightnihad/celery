@@ -53,6 +53,7 @@
     box-shadow: none!important;
 }
 </style>
+<title>Profil</title>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -61,10 +62,13 @@
 
 <div class="container">
     <div class="main-body">
-    
+    {% for message in messages %}
+    {{ message}}
+    {% endfor %}
           <!-- Breadcrumb -->
           <nav aria-label="breadcrumb" class="main-breadcrumb">
             <ol class="breadcrumb">
+              <a href="{% url 'user:main' %}" class="breadcrumb-item active" aria-current="page">Ana səhifə</a>
               <li class="breadcrumb-item active" aria-current="page">User Profil</li>
               <a href="{% url 'file:savefile' %}" class="breadcrumb-item active" aria-current="page">Yeni file yarat</a>
               <a href="{% url 'user:myfiles' %}" class="breadcrumb-item active" aria-current="page">Fayl seç və Göndər</a>
@@ -132,6 +136,7 @@
                       {% if allowedinformation %}
                         {% for allowed in allowedinformation %}
                         <div>
+                        {{'Faylı göndərdikləriviz:'}} {{allowed.receiver}}<br>
                         {{'Fayl adı:'}} {{allowed}}  
                         <br>   
                         <a  href='{% url "file:detail" id=allowed.file.id %}'> Ətraflı</a>
@@ -163,10 +168,12 @@
                       </div>
                       {% if allowerinformation %}
                       {% for allower in allowerinformation %}
+                      {{'Faylı sizə göndərən:'}} {{allower.receiver}}<br>
+                      {{'Fayl adı:'}} {{allower}}
+                      <br>
                         <a  href='{% url "file:detail" id=allower.file.id %}'> Ətraflı</a>
-                        <a  href='{% url "file:deleteshared" id=allower.id %}'> Sizə göndərilmiş faylı silin silin</a>
+                        <a  href='{% url "file:deleteshared" id=allower.id %}'> Sizə göndərilmiş faylı silin</a>
                         
-                        {{'Fayl adı:'}} {{allower}}
                         {% endfor %}
                       {% else %}
                       <span class="text-secondary">Yoxdur</span>

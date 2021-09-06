@@ -17,6 +17,11 @@ class CommentForm(forms.ModelForm):
         model=CommentModel
         fields=['content']
 
+class UpdateForm(forms.ModelForm):
+    class Meta:
+        model=Filemodel
+        fields=['name','description','file']
+
 
 #class ShareForm(forms.ModelForm):
 #    class Meta:

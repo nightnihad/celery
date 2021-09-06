@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<title>Allowed page
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SİZİN FİLE-LARIVIZI GÖRMƏKLƏRİ ÜÇÜN İCAZƏ VERİN.</title>
 </head>
 <body>
+    {% for message in messages %}
+    {{ message}}
+    {% endfor %}
 
 <form action="." method="post" accept-charset="utf-8" enctype="multipart/form-data"> 
     {% csrf_token %}

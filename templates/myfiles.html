@@ -121,21 +121,17 @@ html, body {font-family: 'Open Sans', sans-serif; -webkit-font-smoothing: antial
 .active a {color:#c7ddef;}
 
 </style>
+<title>Myfiles page</title>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <div class="container">
   <ul class="list-group">
     <li class="list-group-item clearfix">
-      <img class="img-responsive img-rounded" src="http://placehold.it/256/163a63" alt=""/>
-      <h3 class="list-group-item-heading">
-      FİLESHARER.COM.....<br>
-        <span class="label label-danger pull-right">FAYLLARINIZI PAYLAŞMAĞINIZ ÜÇÜN DÜŞÜNDÜK</span>
-      </h3>
+      {% for message in messages %}
+    {{ message}}
+    {% endfor %}
+
       {% for fayl in fayllar %}
-      <p class="list-group-item-text lead">
-        {{fayl.description}}
-        <br>
-      </p>
       <div class="btn-toolbar pull-right" role="toolbar" aria-label="">
         <div class="btn-group">
           <ul>
@@ -144,20 +140,23 @@ html, body {font-family: 'Open Sans', sans-serif; -webkit-font-smoothing: antial
             <hr>
             <li>Yaradılış tarixi: </a>{{fayl.created_date}}</li>
             <li>Update tarixi: </a>{{fayl.update_date}}</li>
-            <li>Silinməli olduğu tarix: </a>{{fayl.expiration_date}}</li>
+
+            <li>Silinməli olduğu tarix: </a>{{fayl.expiration_date}}</li><hr>
+            {{"Faylın Açıqlaması:"}} {{fayl.description}}
             <hr>
             <a class='btn btn-danger' type='submit' href="{% url 'file:deletefile' fayl.id %}">Sil</a>
             <hr>
             <a class='btn btn-info'type='submit' href="{% url 'user:file' fayl.id %}">Paylaş</a>
             <hr>
             <a class='btn btn-success' type='submit' href="{% url 'file:updatefile' fayl.id %}">Güncəllə</a>
-
-
-          </ul>
+            <hr><br>
+            </ul>
+            <hr>
+            <br>
         </div>
-        <br>
-        <hr>
         {% endfor %}
+        <hr>
+        <br>
       </div>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

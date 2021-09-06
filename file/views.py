@@ -1,3 +1,4 @@
+from django.http.response import HttpResponse
 from django.shortcuts import render,redirect,get_object_or_404
 from .forms import *
 from django import utils
@@ -19,6 +20,7 @@ def savefile(request):
             fayl.author=request.user
             fayl.expiration_date=utils.timezone.now()+ timedelta(days=7)
             fayl.save()
+            messages.success(request,'fayl yaradıldı')
             return redirect('file:detail',id=fayl.id)
     return render(request,'newfile.html',context)
 """def dashboard(request):
@@ -34,9 +36,9 @@ def savefile(request):
 @login_required()
 def updatefile(request,id):
     sifaris=Filemodel.objects.get(id=id)
-    formupdate1=FileForm(instance=sifaris)
+    formupdate1=UpdateForm(instance=sifaris)
     if request.method =='POST':
-        formupdate1=FileForm(request.POST,request.FILES,instance=sifaris)
+        formupdate1=UpdateForm(request.POST,request.FILES,instance=sifaris)
         if formupdate1.is_valid():
             formupdate1.save()
             messages.success(request,'dəyişikliklər edildi')
@@ -45,6 +47,7 @@ def updatefile(request,id):
     'formupdate1':formupdate1
     }
     return render(request,'update.html',context1)
+
 @login_required()
 def deletefile(request,id):
     sifaris=Filemodel.objects.get(id=id)
@@ -53,6 +56,7 @@ def deletefile(request,id):
     }
     if request.method =='POST':
         sifaris.delete()
+        messages.success(request,'fayl silindi')
         return redirect('user:profil')
     return render(request,'delete.html',context)
 @login_required()
@@ -83,11 +87,14 @@ def deletecomment(request,id):
     comment=get_object_or_404(CommentModel,id=id)
     if request.user ==comment.author or request.user==comment.file.author:
         comment.delete()
+        messages.success(request,'rəy silindi')
         return redirect('file:detail', id=comment.file.id)
+    return HttpResponse('ancaq oz commentlerivi sile bilersen.bu commenti sile bilmezsen')
 @login_required
 def deleteshared(request,id):
     file=ShareModel.objects.get(id=id)
     file.delete()
+    messages.success(request,'fayl silindi')
     return redirect('user:profil')
 
     

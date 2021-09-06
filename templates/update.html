@@ -1,20 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "layout.html" %}
+{% load crispy_forms_tags %} 
+{% load static %}
+{% block head %}
+<title>Update page</title>
+{% endblock head %}
+{% block body %}
+    {% for message in messages %}
+    {{ message}}
+    {% endfor %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-salam
+<link rel="stylesheet" href="{% static 'index.css' %}">
+<div class='container'>
+<form action="" method='post' enctype='multipart/form-data'>
 
-<body>
-    <form action="." method="post" enctype='multipart/form-data'>
-        {% csrf_token %}
-        {{formupdate1}}
-        <button type="submit" id="submit">Login</button>
-      </form>
-</body>
+    {% csrf_token %}
+    {{formupdate1|crispy}}
+    <button type="submit" class="btn btn-danger">Təsdiqlə</button>
 
-</html>
+
+
+    </form>
+</div>
+
+{% endblock body %}
+

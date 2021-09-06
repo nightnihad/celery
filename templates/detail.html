@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap 4 Blog Post Comments Section Design</title>
+  <title>Detail page</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -11,7 +11,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
-<<style>
+<style>
 .comments-details button.btn.dropdown-toggle,
 .comments-details .total-comments {
     font-size: 18px;
@@ -144,6 +144,9 @@
 }
 </style>
 <body>
+    {% for message in messages %}
+    {{ message}}
+    {% endfor %}
 <div class="container">
   <div class="row">
     <div class="col-12">
